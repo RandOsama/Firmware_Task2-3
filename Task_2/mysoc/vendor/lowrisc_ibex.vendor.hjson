@@ -1,0 +1,21 @@
+// Copyright lowRISC contributors.
+// Licensed under the Apache License, Version 2.0, see LICENSE for details.
+// SPDX-License-Identifier: Apache-2.0
+{
+  name: "lowrisc_ibex",
+  target_dir: "lowrisc_ibex",
+
+  upstream: {
+    url: "https://github.com/lowRISC/ibex.git",
+    // Revision hash is fixed for reproducibility.
+    // rev: "master",
+    rev: "78739562ce7b2606c4e208d4029ab890255769f6",
+  },
+
+  exclude_from_upstream: [
+    // GitHub CI configuration
+    ".github",
+    // OpenTitan primitives
+    "vendor/lowrisc_ip/ip*"
+  ]
+}
