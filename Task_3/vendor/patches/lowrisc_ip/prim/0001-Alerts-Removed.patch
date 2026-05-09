@@ -1,0 +1,12 @@
+diff --git a/prim.core b/prim.core
+index 5aa7a57..66dabdc 100644
+--- a/prim.core
++++ b/prim.core
+@@ -23,7 +23,6 @@ filesets:
+       - lowrisc:prim:rst_sync
+       - lowrisc:prim:arbiter
+       - lowrisc:prim:fifo
+-      - lowrisc:prim:alert
+       - lowrisc:prim:esc
+       - lowrisc:prim:subreg
+       - lowrisc:prim:cipher

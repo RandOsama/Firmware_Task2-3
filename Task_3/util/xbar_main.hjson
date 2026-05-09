@@ -1,0 +1,137 @@
+// Copyright lowRISC contributors.
+// Licensed under the Apache License, Version 2.0, see LICENSE for details.
+// SPDX-License-Identifier: Apache-2.0
+
+{ name: "main",
+  type: "xbar",
+  clock: "clk_i", // Main clock, used in sockets
+  clock_connections: {
+    clk_i: "main",
+  },
+  reset: "rst_ni",
+  reset_connections: {
+    rst_ni: "main",
+  },
+  nodes: [
+    { name:  "ibex_lsu", // Load store unit
+      type:  "host",
+      clock: "clk_i",
+      reset: "rst_ni",
+      xbar:  false,
+      pipeline: false,
+    },
+     { name:  "rv_dm_sba", // Load store unit
+      type:  "host",
+      clock: "clk_i",
+      reset: "rst_ni",
+      xbar:  false,
+      pipeline: false,
+    }, 
+    { name:  "ibex_instr", // instruction bus
+      type:  "host",
+      clock: "clk_i",
+      reset: "rst_ni",
+      xbar:  false,
+      pipeline: false,
+    },
+    { name:  "sram", // Internal memory
+      type:  "device",
+      clock: "clk_i",
+      reset: "rst_ni",
+      xbar:  false,
+      addr_range: [{
+        base_addr: "0x00100000",
+        size_byte: "0x00020000",
+      }],
+    },
+    { name:  "uart", // UART
+      type:  "device",
+      clock: "clk_i",
+      reset: "rst_ni",
+      xbar:  false,
+      addr_range: [{
+        base_addr: "0x80000000",
+        size_byte: "0x00001000",
+      }],
+    },
+    //Added by Deyaa Alkhateeb 4th of march 2026 9:30 AM
+    {
+      name: "rv_timer",
+      type: "device",
+      clock: "clk_i",
+      reset: "rst_ni",
+      xbar: false,
+       addr_range: [{
+      base_addr: "0x40500000",
+      size_byte: "0x00000200",
+    }]
+    },
+    {
+    name: "rv_plic",
+    type: "device",
+    clock: "clk_i",
+    reset: "rst_ni",
+    xbar: false,
+    addr_range: [{
+      base_addr: "0x48000000",
+      size_byte: "0x08000000",
+    }]
+    },
+    //end
+    //Added by Deyaa Alkhateeb 17th of feb 2026 9:30 AM
+    {
+      name: "spi_host",
+      type: "device",
+      clock: "clk_i",
+      reset: "rst_ni"
+      xbar: false,
+      addr_range: [{
+        base_addr: "0x40300000",
+        size_byte: "0x00001000",
+      }]
+    }
+    //Added by Deyaa Alkhateeb 24th of feb 2026 9:30 AM
+    {
+      name: "rv_dm_mem",
+      type: "device",
+      clock: "clk_i",
+      reset: "rst_ni"
+      xbar: false,
+      addr_range: [{
+        base_addr: "0x00010000",
+        size_byte: "0x00001000",
+      }]
+    }
+    {
+      name: "rv_dm_regs",
+      type: "device",
+      clock: "clk_i",
+      reset: "rst_ni"
+      xbar: false,
+      addr_range: [{
+        base_addr: "0x40400000",
+        size_byte: "0x00001000",
+      }]
+    }
+    //end
+  ],
+
+    //Added by Deyaa Alkhateeb 24th of feb 2026 
+    
+  connections: {
+    ibex_lsu: [
+      "sram",
+      "uart",
+      //Added by Deyaa Al-Khati, 17th of feb 2026
+      "rv_dm_mem",
+      "rv_dm_regs",
+      "spi_host",
+      "rv_timer",
+      "rv_plic"
+      //end
+    ],
+    ibex_instr: ["sram", "rv_dm_mem"],
+    rv_dm_sba: ["sram", "uart", "spi_host", "rv_timer", "rv_plic"] //added uart and spi to be able to access the registers for debugging
+  },
+}
+

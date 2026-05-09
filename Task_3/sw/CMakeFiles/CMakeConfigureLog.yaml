@@ -1,0 +1,78 @@
+
+---
+events:
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CMakeDetermineSystem.cmake:12 (find_program)"
+      - "CMakeLists.txt:2 (project)"
+    mode: "program"
+    variable: "CMAKE_UNAME"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "uname"
+    candidate_directories:
+      - "/home/omen/firmware/.venv/bin/"
+      - "/home/omen/miniconda3/bin/"
+      - "/home/omen/miniconda3/condabin/"
+      - "/home/omen/verilator/bin/"
+      - "/home/omen/.local/share/mise/installs/node/25.1.0/bin/"
+      - "/home/omen/.local/share/mise/installs/python/3.14.0/bin/"
+      - "/home/omen/.local/share/omarchy/bin/"
+      - "/usr/local/sbin/"
+      - "/usr/local/bin/"
+      - "/usr/bin/"
+      - "/usr/lib/jvm/default/bin/"
+      - "/usr/bin/site_perl/"
+      - "/usr/bin/vendor_perl/"
+      - "/usr/bin/core_perl/"
+      - "/home/omen/.local/bin/"
+      - "/home/omen/.config/Code/User/globalStorage/github.copilot-chat/debugCommand/"
+      - "/home/omen/.config/Code/User/globalStorage/github.copilot-chat/copilotCli/"
+      - "/home/omen/.vscode/extensions/ms-python.debugpy-2025.18.0-linux-x64/bundled/scripts/noConfigScripts/"
+      - "/home/omen/Discord/"
+      - "/bin/"
+    searched_directories:
+      - "/home/omen/firmware/.venv/bin/uname"
+      - "/home/omen/miniconda3/bin/uname"
+      - "/home/omen/miniconda3/condabin/uname"
+      - "/home/omen/verilator/bin/uname"
+      - "/home/omen/.local/share/mise/installs/node/25.1.0/bin/uname"
+      - "/home/omen/.local/share/mise/installs/python/3.14.0/bin/uname"
+      - "/home/omen/.local/share/omarchy/bin/uname"
+      - "/usr/local/sbin/uname"
+      - "/usr/local/bin/uname"
+    found: "/usr/bin/uname"
+    search_context:
+      ENV{PATH}:
+        - "/home/omen/firmware/.venv/bin"
+        - "/home/omen/miniconda3/bin"
+        - "/home/omen/miniconda3/condabin"
+        - "/home/omen/verilator/bin"
+        - "/home/omen/.local/share/mise/installs/node/25.1.0/bin"
+        - "/home/omen/.local/share/mise/installs/python/3.14.0/bin"
+        - "/home/omen/.local/share/omarchy/bin"
+        - "/home/omen/.local/share/omarchy/bin"
+        - "/usr/local/sbin"
+        - "/usr/local/bin"
+        - "/usr/bin"
+        - "/usr/lib/jvm/default/bin"
+        - "/usr/bin/site_perl"
+        - "/usr/bin/vendor_perl"
+        - "/usr/bin/core_perl"
+        - "/home/omen/.local/share/../bin"
+        - "/home/omen/.local/bin"
+        - "/home/omen/.config/Code/User/globalStorage/github.copilot-chat/debugCommand"
+        - "/home/omen/.config/Code/User/globalStorage/github.copilot-chat/copilotCli"
+        - "/home/omen/.vscode/extensions/ms-python.debugpy-2025.18.0-linux-x64/bundled/scripts/noConfigScripts"
+        - "/home/omen/.local/bin"
+        - "/home/omen/Discord"
+...

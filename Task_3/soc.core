@@ -1,0 +1,86 @@
+CAPI=2:
+name: "marno:soc:main"
+description: "An easy to build SoC"
+filesets:
+  files_rtl:
+    depend:
+      - lowrisc:ibex:ibex_top_tracing
+      - lowrisc:ip:uart
+      - lowrisc:ip:spi_host
+      #Added by Deyaa on 4th of march 2026
+      - lowrisc:ip:rv_timer:0.1
+      - lowrisc:opentitan:top_earlgrey_rv_plic
+      #end
+      - lowrisc:ip:rv_dm
+      - lowrisc:ip:xbar_main
+      - lowrisc:ip:spi_device_pkg 
+      - lowrisc:prim:alert
+      - lowrisc:prim:onehot
+      - lowrisc:tlul:adapter_host
+      - lowrisc:tlul:adapter_reg
+      - lowrisc:tlul:lc_gate
+    files:
+      - rtl/soc_mod.sv
+    file_type: systemVerilogSource
+
+  files_verilator:
+    depend:
+      - lowrisc:ibex:sim_shared
+      - lowrisc:dv_verilator:memutil_verilator
+      - lowrisc:dv_verilator:simutil_verilator
+      - lowrisc:dv_verilator:ibex_pcounts
+      - lowrisc:dv_dpi_c:uartdpi:0.1
+      - lowrisc:dv_dpi_sv:uartdpi:0.1
+      - lowrisc:dv_dpi_c:jtagdpi:0.1
+      - lowrisc:dv_dpi_sv:jtagdpi:0.1
+    files:
+      - dv/top_verilator.sv: { file_type: systemVerilogSource }
+      - dv/top_verilator.cc: { file_type: cppSource }
+      # Added by Deyaa Al-khatib 17th of Feb 11PM
+      - dv/spiflash.v: { file_type: verilogSource }
+      # End of the addition
+
+parameters:
+  # For value definition, please see ip/prim/rtl/prim_pkg.sv
+  PRIM_DEFAULT_IMPL:
+    datatype: str
+    paramtype: vlogdefine
+    description: Primitives implementation to use, e.g. "prim_pkg::ImplGeneric".
+
+targets:
+  default: &default_target
+    filesets:
+      - files_rtl
+
+  sim:
+    <<: *default_target
+    default_tool: verilator
+    filesets_append:
+      - files_verilator
+    toplevel: top_verilator
+    tools:
+      verilator:
+        mode: cc
+        verilator_options:
+          # Disabling tracing reduces compile times but doesn't have a
+          # huge influence on runtime performance.
+          - '--trace'
+          - '--trace-fst' # this requires -DVM_TRACE_FMT_FST in CFLAGS below!
+          - '--trace-structs'
+          - '--trace-params'
+          - '--trace-max-array 1024'
+          - '-CFLAGS "-Wall -DVM_TRACE_FMT_FST -DTOPLEVEL_NAME=top_verilator"'
+          - '-LDFLAGS "-pthread -lutil -lelf"'
+          - "-Wno-WIDTHEXPAND"
+          - "-Wno-WIDTHTRUNC"
+          - "-Wno-UNOPTFLAT" #Added by Deyaa Alkhateeb on 17th of Feb 2026
+          # Added by Deyaa Al-khatib 17th of Feb 11PM
+          - "--no-timing" # spiflash.v uses #1 delays for modeling; ignore for functional sim
+          - "-Wno-TIMESCALEMOD"    # spiflash.v has timescale, other modules don't
+          - "-Wno-CASEINCOMPLETE"  # spiflash.v mode case doesn't cover all 4-bit values
+          # End of the addition
+          # RAM primitives wider than 64bit (required for ECC) fail to build in
+          # Verilator without increasing the unroll count (see Verilator#1266)
+          - "--unroll-count 72"
+    parameters:
+      - PRIM_DEFAULT_IMPL=prim_pkg::ImplGeneric

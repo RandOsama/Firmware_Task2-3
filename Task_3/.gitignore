@@ -1,0 +1,30 @@
+# Python
+.venv
+__pycache__/
+
+# FuseSoC build
+build/
+
+# Simuloation output
+performance_counters.csv
+sim.fst
+trace_core_00000000.log
+uart0.log
+
+# Software build
+boot.o
+hello_world.o
+hello_world.elf
+#Cmake
+CMakeCache.txt
+
+uart.o
+text.txt 
+spi_test.o 
+simulate_flash.o
+hello_world.map
+*.o
+*.elf
+*.log
+*.bin
+me/
